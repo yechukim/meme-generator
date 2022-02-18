@@ -19,6 +19,7 @@ const Input = styled.input`
   font-size:0.9em;
 `
 const ImageWrapper = styled.div`
+  position:relative;
   
 `
 const Image = styled.img`
@@ -29,6 +30,14 @@ const Image = styled.img`
   height:80%;
   margin:auto;
 `
+
+const TopText = styled.h1`
+  position:absolute;
+  top:0;
+`
+const BottomText = styled.h1`
+  position:absolute;
+  bottom:0;`
 function Meme() {
 
   const [topText, setTopText] = useState('')
@@ -66,12 +75,12 @@ function Meme() {
         placeholder='아래 들어갈 문구' />
       <ImageWrapper>
         <Image src={meme ? meme : null} />
-        <Button title='클릭해서 짤 가져오기' onClick={handleClick} />
+        <TopText>{topText}</TopText>
+        <BottomText>{bottomText}</BottomText>
+      </ImageWrapper>
+      <Button title='클릭해서 짤 가져오기' onClick={handleClick} />
         <Button title='카카오톡으로 공유하기' kakao />
         <Button title='이미지로 저장하기' />
-
-      </ImageWrapper>
-      {/* 이미지 다시 불러오기 버튼  */}
 
     </Wrapper>
   );
