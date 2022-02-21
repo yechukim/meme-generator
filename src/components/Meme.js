@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import styled from '@emotion/styled/macro';
 import Button from './Button';
 import { getMeme } from '../api/meme';
+import { saveAs } from 'file-saver';
 const Wrapper = styled.div`
   
 `
@@ -20,30 +21,53 @@ const Input = styled.input`
 `
 const ImageWrapper = styled.div`
   position:relative;
-  
+  padding:10px;
+  margin: 80px auto;
+  background-color:#000;
 `
 const Image = styled.img`
   display: block;
-  width:80%;
+  width:100%;
   object-fit:contain;
-  background-color:#000;
   height:80%;
   margin:auto;
 `
 
 const TopText = styled.h1`
   position:absolute;
-  top:0;
+  text-align:center;
+  top:-45px;
+  left:0;
+  right:0;
+  margin:auto;
+  color: #fff;
+  font-size:3em;
+  font-weight: 900;
+  background-color:#000;
+  font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+
 `
 const BottomText = styled.h1`
   position:absolute;
-  bottom:0;`
+  text-align:center;
+  bottom:-50px;
+  left:0;
+  right:0;
+  margin:auto;
+  font-size:3em;
+  color: #fff;
+  font-weight: 900;
+  font-weight: 900;
+  background-color:#000;
+  font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  `
 function Meme() {
 
   const [topText, setTopText] = useState('')
   const [bottomText, setBottomText] = useState('')
   const [meme, setMeme] = useState(null)
 
+  const captured = document.getElementById('meme')
   const handleChange = (e) => {
     const { name, value } = e.target
 
@@ -61,6 +85,11 @@ function Meme() {
     setMeme(() => respondedMeme)
   }
 
+  const saveMeme = () => {
+    // domtoimage.toPng(captured)
+    // .then(blob => window.saveAs(blob), 'myMeme.png')
+
+  }
   return (
     <Wrapper>
       <Input
@@ -73,14 +102,15 @@ function Meme() {
         value={bottomText}
         onChange={handleChange}
         placeholder='아래 들어갈 문구' />
-      <ImageWrapper>
+      <ImageWrapper className='meme'>
         <Image src={meme ? meme : null} />
         <TopText>{topText}</TopText>
         <BottomText>{bottomText}</BottomText>
+
       </ImageWrapper>
       <Button title='클릭해서 짤 가져오기' onClick={handleClick} />
         <Button title='카카오톡으로 공유하기' kakao />
-        <Button title='이미지로 저장하기' />
+      <Button title='이미지로 저장하기' onClick={saveMeme} />
 
     </Wrapper>
   );
