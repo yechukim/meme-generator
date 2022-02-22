@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from '@emotion/styled/macro';
 
 const CustomButton = styled.button`
@@ -12,6 +12,7 @@ const CustomButton = styled.button`
   width:50%;
   margin: 10px auto;
   border:2.5px solid #333;
+  transition: all .4s; 
   :hover{
     cursor:pointer;
   }
@@ -21,8 +22,28 @@ const CustomButton = styled.button`
 
 `
 function Button({ title, kakao = false, onClick }) {
+
+  const [x, setX] = useState(0)
+  const [y, setY] = useState(0)
+
+  //새 짤가져올때 레인보우 스프링클 뿌려야지
+  const handleMouseMove = (e) => {
+    const x = e.clientX
+    const y = e.clientY
+
+    setX(() => x)
+    setY(() => y)
+  }
+
+  useEffect(() => {
+    // console.log(x, y)
+
+  }, [x, y])
+
+
   return (
     <CustomButton
+      onMouseMove={handleMouseMove}
       onClick={onClick}
       kakao={kakao ? '#FEE500' : '#fff'}>{title}</CustomButton>
   );

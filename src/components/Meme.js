@@ -3,6 +3,7 @@ import styled from '@emotion/styled/macro';
 import Button from './Button';
 import { getMeme } from '../api/meme';
 import { saveAs } from 'file-saver';
+import domtoimage from 'dom-to-image';
 const Wrapper = styled.div`
   
 `
@@ -67,7 +68,7 @@ function Meme() {
   const [bottomText, setBottomText] = useState('')
   const [meme, setMeme] = useState(null)
 
-  const captured = document.getElementById('meme')
+  const captured = document.getElementsByClassName('meme')
   const handleChange = (e) => {
     const { name, value } = e.target
 
@@ -86,10 +87,12 @@ function Meme() {
   }
 
   const saveMeme = () => {
-    // domtoimage.toPng(captured)
-    // .then(blob => window.saveAs(blob), 'myMeme.png')
-
+    domtoimage.toPng(captured[0])
+      .then(blob => console.log(blob))
+      .catch(error => console.error(error.message))
   }
+
+
   return (
     <Wrapper>
       <Input
@@ -102,15 +105,23 @@ function Meme() {
         value={bottomText}
         onChange={handleChange}
         placeholder='아래 들어갈 문구' />
+
       <ImageWrapper className='meme'>
         <Image src={meme ? meme : null} />
         <TopText>{topText}</TopText>
         <BottomText>{bottomText}</BottomText>
 
       </ImageWrapper>
-      <Button title='클릭해서 짤 가져오기' onClick={handleClick} />
-        <Button title='카카오톡으로 공유하기' kakao />
-      <Button title='이미지로 저장하기' onClick={saveMeme} />
+      <Button
+        title='클릭해서 새 짤 가져오기'
+        onClick={handleClick}
+      />
+      {/* <Button
+        title='카카오톡으로 공유하기'
+        kakao /> */}
+      {/* <Button
+        title='이미지로 저장하기'
+        onClick={saveMeme} /> */}
 
     </Wrapper>
   );
